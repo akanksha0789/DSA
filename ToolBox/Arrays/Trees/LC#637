@@ -1,0 +1,52 @@
+/*
+Given the root of a binary tree, return the average value of the nodes on each level in the form of an array. 
+Answers within 10-5 of the actual answer will be accepted.
+*/
+
+
+/*************/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int val=0, TreeNode left=null, TreeNode right=null) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+public class Solution {
+    public IList<double> AverageOfLevels(TreeNode root) {
+        IList<double> res = new List<double>();
+        Queue<TreeNode> q = new Queue<TreeNode>();
+        if(root == null ){return res;}
+        int cntN = 1;
+        q.Enqueue(root);
+        while(q.Count > 0)
+        {
+           double ave = 0.00000;
+            int len = q.Count;
+            cntN = q.Count;
+            while(cntN >= 1)
+            {
+            TreeNode t = q.Dequeue();
+            if(t.left!=null){q.Enqueue(t.left);}
+            if(t.right!=null) {q.Enqueue(t.right);}
+            ave = (ave + t.val);
+            cntN--;
+            }
+            //Console.WriteLine("ave " + ave + " cint" + cntN);
+            res.Add(ave/len);
+            ave = 0.00000;     
+            
+        }
+        return res;
+    }
+}
+
+//APPLY BFS
+//NO OF nodes at a level is equal to size of child node list 
+//as soon as list is complete at a level find averae and add in list 
